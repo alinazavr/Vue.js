@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <h1>ITechnology</h1>
+        <div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="">Корзина</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="app" class="container">
+        <div class="avatar">
+            <img v-bind:src="user.avatar">
+        </div>
+        <div class="information">
+            <p> Имя: {{user.name}}</p>
+            <p> Фамилия: {{user.surname}}</p>
+            <p> Логин: {{user.login}}</p>
+            <p> Почта: {{user.email}}</p>
+            <p> Дата рождения: {{user.birth}}</p>
+        </div>
+    </div>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                user: {
+                    id: 1,
+                    name: 'Андрей',
+                    surname: 'Технологов',
+                    login: 'TECHnick',
+                    email: 'angrewtech@gmail.com',
+                    birth: '21.08.1989',
+                    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW7-8a-ekzYtYXHT5Bk_fpm9aq0uuQmVTiF7Mf0KvuMcpTCjhB&s'
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>
