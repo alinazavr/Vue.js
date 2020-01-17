@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <meta charset="utf-8"></meta>
+        <link rel="stylesheet" href="./style.css">
+	</head>
+	<body>
+        <div id="app">
+            <header>
+                <h1>{{sitename}}</h1>
+                <div>
+                    <ul>
+                        <li><a href="./home.html">Личный кабинет</a></li>
+                        <li><a href="">Корзина</a></li>
+                    </ul>
+                </div>
+            </header>
+            <main class="container">
+                    <div class="picture">
+                        <figure>
+                            <img style="width: 300px;" v-bind:src="product.image">
+                        </figure>
+                    </div>
+                    <div class="description">
+                        <h1 v-text="product.item"></h1>
+                        <p v-html="product.description"></p>
+                        <p>Год релиза: {{product.year}}</p>
+                        <p>Процессор: {{product.cpu}}</p>
+                        <p>Цвет: {{product.color }}</p>
+                        <p>Объём накопителя: {{product.memory}}</p>
+                        <p>Цена: {{product.price | formatPrice}}</p>
+                    </div>
+                </div>
+                </div>
+            </main>
+        </div>        
+        <script>
+            let webStore = new Vue({
+                el:"#app",
+                data: {
+                    sitename: 'ITechnology',
+                    product:{
+                        id:1,
+                        item:'Apple MacBook Pro 13"',
+                        description: 'MacBook Pro задаёт совершенно новые стандарты мощности и портативности ноутбуков. Процессоры высокой производительности, память большего объёма, передовая графика, сверхбыстрые накопители и другие впечатляющие способности MacBook Pro.',
+                        year: '2019',
+                        cpu:'Intel Core i5',
+                        color: '"Серый космос"',
+                        memory: '215 ГБ',
+                        price: '188280Р',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW7-8a-ekzYtYXHT5Bk_fpm9aq0uuQmVTiF7Mf0KvuMcpTCjhB&s',
+                    },
+                },
+                filters:{
+                    formatPrice: function(val){
+                        if(!val) return '';
+                        return val + " " + String.fromCharCode(8381);
+                    }
+                },
+            });
+        </script>
+   </body>
+</html>
