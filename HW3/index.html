@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue</title>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="app">
+            <header>
+                <h1>{{sitename}}</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#">Продукты</a></li>
+                        <li class="search">
+                            <input type="text" v-model='textSearch' placeholder="Поиск...">
+                        </li>                        
+                        <li><a href="#">Корзина</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>    
+                </nav> 
+            </header>
+            <main class="articles">
+                <ul>
+                    <li v-for='article in getArticle'>
+                        <a :href="article.url">
+                            <span v-html='article.img'></span>
+                            <span class="title">{{article.title}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </main>
+        </div>
+
+        <script>
+            let app = new Vue({
+                el: '#app',
+                data: {
+                    sitename: 'ITechnology',
+                        articles: [{
+                        title: 'Россия без Apple в 2020?',
+                        url: 'http://www.sobaka.ru/city/internet/99968',
+                        img: '<img src="./img/apple.jpg" height = "400" width = "400"></img>'
+                    }, {
+                        title: 'Какими технологиями запомнился 2019',
+                        url: 'https://nv.ua/techno/gadgets/luchshie-gadzhety-2019-i-samye-ozhidaemye-gadzhety-2020-50058058.html',
+                        img: '<img src="./img/best.jpg"  height = "400" width = "400"></img>'
+                    }, {
+                        title: 'Смотрим фильмы про гаджеты на гаджетах',
+                        url: 'https://www.ivi.ru/titr/goodmovies/social-media-addict',
+                        img: '<img src="./img/films.jpg" alt="NotFound" height = "400" width = "400"></img>'
+                    }],
+                    textSearch: '',
+                    p_Data: 'Поиск статей',
+                    showInput: false
+                },
+                computed: {
+                    getArticle() {
+                        let arr = [];
+                        let regExp = new RegExp(".*" + this.textSearch + ".*", "i")
+                        for (let i = 0; i < this.articles.length; i++) {
+                            if (regExp.test(this.articles[i].title)) {
+                                arr.push(this.articles[i]);
+                            }
+                        }
+                        return arr;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
