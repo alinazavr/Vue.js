@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <meta charset="utf-8"></meta>
+        <link rel="stylesheet" href="./style.css">
+	</head>
+	<body>
+        <div id="app">
+            <header>
+                <h1>{{sitename}}</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#" v-on:click.prevent="page(1)">Продукты</a></li>
+                        <li><a href="#" v-on:click.prevent="page(2)">Личный кабинет</a></li>
+                        <li><a href="#" v-on:click.prevent="page(3)">Корзина</a></li>
+                        <li><a href="#" v-on:click.prevent="page(4)">О нас</a></li>
+                    </ul>    
+                </nav> 
+            </header>
+        
+            <main class="container" v-if='showProduct'>
+                <div class="picture">
+                    <figure>
+                        <img style="width: 300px;" v-bind:src="product.image">
+                    </figure>
+                </div>
+                <div class="description">
+                    <h1 v-html='product.item'></h1>
+                    <p>{{product.description}}</p><a href="#" @click='details = !details'>{{details ? 'Скрыть':'Читать больше'}}</a>
+                    <p v-show='details'>С процессорами Intel Core 8-го поколения MacBook Pro достигает рекордных высот вычислительной мощности. MacBook Pro 13 дюймов теперь 
+                        оснащён 6-ядерным процессором Intel Core i9, который работает до 70% быстрее процессоров предыдущего поколения и обеспечивает ускорение Turbo Boost 
+                        до 4,8 ГГц. Представляем Apple T2 — чип второго поколения для Mac, созданный для более надёжной защиты информации на вашем MacBook Pro. Он установлен 
+                        на моделях 13 и 15 дюймов с панелью Touch Bar и оснащён сопроцессором Secure Enclave, который обеспечивает работу функции безопасной загрузки и отвечает 
+                        за хранение зашифрованных данных. </p>
+                    <p>Год релиза: {{product.year}}</p>
+                    <p>Процессор: {{product.cpu}}</p>
+                    <p>Цвет: {{product.color }}</p>
+                    <p>Объём накопителя: {{product.memory}}</p>
+                    <p>Цена: {{product.price | formatPrice}}</p>
+                </div>
+            </main>
+
+            <div v-if="showAccount">
+                <p>Больше, чем личный кабинет</p>
+            </div>
+
+            <div v-if='showCourt'>
+                <p>Больше, чем корзина</p>
+            </div>
+                
+            <div v-if='showAbout'>
+                <p>Больше, чем магазин</p>
+            </div>
+
+        </div>
+
+        <script>
+            let webStore = new Vue({
+                el:"#app",
+                data: {
+                    sitename: 'ITechnology', 
+                    details: false,
+                    showAbout: false,
+                    showAccount: false,
+                    showCourt: false,
+                    showProduct: true,
+                    ActivePage: 1,
+                    product:{
+                        id:1,
+                        item:'Apple MacBook Pro 13"',
+                        description: 'MacBook Pro задаёт совершенно новые стандарты мощности и портативности ноутбуков. Процессоры высокой производительности, память большего объёма, передовая графика, сверхбыстрые накопители и другие впечатляющие способности MacBook Pro.',
+                        year: '2019',
+                        cpu:'Intel Core i5',
+                        color: '"Серый космос"',
+                        memory: '512 ГБ',
+                        price: '188280Р',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW7-8a-ekzYtYXHT5Bk_fpm9aq0uuQmVTiF7Mf0KvuMcpTCjhB&s',
+                    },
+                   
+                },
+                filters:{
+                    formatPrice: function(val){
+                        if(!val) return '';
+                        return val + " " + String.fromCharCode(8381);
+                    }
+                },
+                mounted: function() {
+                    this.showProduct = true;
+                },    
+                methods: {
+                page(ActivePage) {
+                    this.ActivePage = ActivePage;
+                    switch (this.ActivePage) {
+                        case 1:
+                            this.showProduct = true;
+                            this.showAccount = false;
+                            this.showCourt = false;
+                            this.showAbout = false;
+                            break;
+                        case 2:
+                            this.showProduct = false;
+                            this.showAccount = true;
+                            this.showCourt = false;
+                            this.showAbout = false;
+                            break;
+                        case 3:
+                            this.showProduct = false;
+                            this.showAccount = false;
+                            this.showCourt = true;
+                            this.showAbout = false;
+                            break;
+                        case 4:
+                            this.showProduct = false;
+                            this.showAccount = false;
+                            this.showCourt = false;
+                            this.showAbout = true;
+                            break;
+                        default:
+                            this.showProduct = true;
+                            this.showAccount = false;
+                            this.showCourt = false;
+                            this.showAbout = false;
+                            break;
+                    }
+                }
+            }
+            });
+        </script>
+   </body>
+</html>
